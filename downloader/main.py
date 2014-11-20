@@ -4,7 +4,6 @@ Created on Oct 30, 2014
 @author: Andrej
 '''
 import daily_downloader as d
-# from jobs_parser import download_jobs
 from downloader import indeed_crawler
 
 downloader = d.DailyDownloader()

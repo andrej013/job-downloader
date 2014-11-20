@@ -37,12 +37,10 @@ class DailyDownloader(object):
         else:
             cnx.close()
             return False
-        #locations=['San Francisco, CA', 'New York, NY', 'Denver, CO']
         return False
     
     def get_job_keywords(self):
-        job_names=['Scala','R','Perl','SQL','C#','Ruby','C++','JavaScript','PHP','HTML5']
-        #job_names=['java', 'software engineer', 'big data', 'python','web developer']
+        job_names=['java', 'python', 'big data', 'software engineer', 'Scala','R','Perl','SQL','C#','Ruby','C++','JavaScript','PHP','HTML5','CSS']
         return job_names
     
     def __init__(self):
