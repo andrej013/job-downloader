@@ -75,20 +75,21 @@ class JobAd(object):
         self.city = city
         self.state = state
         self.regional_center = regional_center
-        
+    
+# a hack, website alows up to 50 jobs per page, but this is a workaround
 def set_ads_per_page_to_100(br):
     br.form.set_all_readonly(False)
     ads_per_page_control = br.form.find_control("limit")
-    # add item 100, because only up to 500 existts on the website
+    # add item 100, because only up to 500 exists on the website
     mechanize.Item(ads_per_page_control, {"contents": "100", "value": "100", "label": "100"})
     br.form.fixup()
     br.form["limit"] = ['100'] 
 
 def remove_sponsored_links(html):
     '''
-    remove lines with advertisment dates such as:
+    remove lines with advertisement dates such as:
     <span class=sdn>Sponsored by <b>Pixured, Inc.</b></span>&nbsp;-&nbsp;<span class=date>30+ days ago</span>
-    we want only 10 dates per page for 10 jobs so we remove sponsored links
+    we want only 100 dates per page for 100 jobs so we remove sponsored links
     '''
     clean_html = ""
     for line in html.splitlines():
@@ -104,13 +105,11 @@ def get_dates(page):
     soup = BeautifulSoup(clean_html)
     # find a list of all span elements
     spans = soup.find_all('span', {'class' : 'date'})
-    # span_dates = spans[2:]
     ad_dates = []
     for span_date in spans:
         string_date = span_date.get_text()
         a = string_date.split(' ')
         if 'day' in string_date:
-            # print 'days'
             if '+' in string_date:  # as in 30+ days ago
                 days_ago = randint(30, 60)
             else:
@@ -118,7 +117,6 @@ def get_dates(page):
             ad_date = (datetime.now() - timedelta(days=days_ago)).date()
             ad_dates.append(ad_date)
         elif 'hour' in string_date:
-            # print 'hours'
             hours_ago = int(a[0])
             ad_date = (datetime.now() - timedelta(hours=hours_ago)).date()
             ad_dates.append(ad_date)
@@ -145,10 +143,6 @@ def get_company_city_metro_state_list(page, regional_center):
             company_city_state_list.append(CompanyCityMetroState(company, city, regional_center, state))
     return company_city_state_list
 
-def does_text_exist(url):
-    return False
-    # check if job ad with the url already exists
-
 
 def get_text_from_url(url, number_retried, return_list):
     browser = mechanize.Browser()
@@ -161,9 +155,7 @@ def get_text_from_url(url, number_retried, return_list):
         try:
             page = browser.open(link)
             ad_website = browser.geturl()
-            # page = browser.submit()
             html = page.get_data()
-            
             # html = urlopen(link).read()
             soup = BeautifulSoup(html)
             [x.extract() for x in soup.find_all('script')]
@@ -183,61 +175,6 @@ def get_text_from_url(url, number_retried, return_list):
         print str(e)
         return [None, None]
 
-def find_ads(conn, ad_dates_list, navigationSettings, company_city_metro_state_list):  # br, page_number
-    br = navigationSettings.get_browser()
-    page_number = navigationSettings.get_page_number()
-    i = 0
-    url_text_map = {}
-    for link in br.links():            
-        if 'this,jobmap[' in str(link):
-            job_title = link.text
-            text_exists = does_text_exist(link.url)
-            if not text_exists:
-                # text, ad_website = get_text_from_url(link.url, 0)
-                ad = []
-                t = threading.Thread(target=get_text_from_url, args=(link.url, 0, ad))
-                t.start()
-                
-                number_of_seconds_to_look_for_text = 10
-                t.join(number_of_seconds_to_look_for_text)
-                if(len(ad) == 0):
-                    text = None  # text not found, list still empty
-                else:
-                    try:
-                        text, ad_website = ad  # "p._target
-                    except Exception as e:
-                        print str(e)
-                        text, ad_website = [None, None]
-                
-                if text != "":  # it is empty if the page cant be opened - we get 404 not found
-                    print link.url + " " + str(len(ad_dates_list)) + " " + str(len(company_city_metro_state_list))
-                    try:
-                        url_text_map[link.url] = [ad_dates_list[i], ad_website, job_title, company_city_metro_state_list[i], text]
-                    except Exception as e:
-                        print e
-                i = i + 1
-        # look for the next page. example link: /jobs?q=java+developer&l=NYC&start=10
-        # or http://www.indeed.com/jobs?q=neurologist&l=nyc&start=10
-        # if link with start exists, then we aren't on the last page
-        if "start=" + str(page_number * 10) in str(link):
-            next_page_link = indeed + link.url
-            try:
-                next_page = br.open(next_page_link)  # see common errors for this
-            except urllib2.URLError as e:
-                print str(e)
-                print 'retry:'
-                try:
-                    next_page = br.open(next_page_link)
-                except urllib2.URLError as e:
-                    print 'failed again'
-                    print str(e)
-                    # if it fails twice, go to the next city (maybe save the city name to the file for future) 
-                    return Settings(br, page_number, url_text_map, "end_of_search")  # [br, page_number, url_text_map, "end_of_search"]
-            page_number = page_number + 1
-            return Settings(br, page_number, url_text_map, next_page)
-    # this is the end of the search, there is no next page if we get here
-    return Settings(br, page_number, url_text_map, "end_of_search")
-
 def get_job_links(br, page_number):
     indeed_link_list = []
     next_page_link = None
@@ -256,7 +193,6 @@ def get_job_links(br, page_number):
     return [indeed_link_list, next_page_link]
 
 def find_not_downloaded_jobs(conn, ad_dates_list, navigationSettings, company_city_metro_state_list):
-    # def find_ads(conn, ad_dates_list, navigationSettings, company_city_state_list): #br, page_number
     br = navigationSettings.get_browser()
     page_number = navigationSettings.get_page_number()
     indeed_link_and_title_list, next_page_link = get_job_links(br, page_number)
@@ -274,7 +210,7 @@ def find_not_downloaded_jobs(conn, ad_dates_list, navigationSettings, company_ci
                                                                     # q2 = pyes.MatchQuery('_id', '/rc/clk?jk=3d2ed43049102dff')
                                                                     # q = pyes.BoolQuery(should=[q1, q2])
     q = pyes.BoolQuery(should=match_queries)
-    results = es_conn.search(q, size='100')
+    results = es_conn.search(q, size='100')  # size 100 because we can have maximally 100 ads per page
     already_downloaded_job_links_set = set()
     for r in results:
         already_downloaded_job_links_set.add(r.indeed_url)
@@ -380,7 +316,6 @@ def download_jobs(job_title, location):
     
     regional_center = location.split(',')[0]  # aka city
     page_number = 1
-    navigationSettings = [br, page_number]
     navigationSettings = Settings(br=br, page_no=page_number, page=page)
     while True:  # for i in range(1,20):
         print job_title + " " + location + ", page number: " + str(navigationSettings.get_page_number())
