@@ -1,0 +1,124 @@
+/rc/clk?jk=2aeeb43446fd6dd6 10 10
+Traceback (most recent call last):
+  File "C:\eclipse\plugins\org.python.pydev_3.8.0.201409251235\pysrc\pydevd.py", line 2183, in <module>
+    globals = debugger.run(setup['file'], None, None)
+  File "C:\eclipse\plugins\org.python.pydev_3.8.0.201409251235\pysrc\pydevd.py", line 1622, in run
+    pydev_imports.execfile(file, globals, locals)  # execute the script
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\main.py", line 17, in <module>
+    jobs_parser.download_jobs(job, location)
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\jobs_parser.py", line 191, in download_jobs
+    settings = find_ads(conn, dates, settings[0], settings[1], company_city_state_list)
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\jobs_parser.py", line 164, in find_ads
+    next_page = br.open(next_page_link)
+  File "build\bdist.win32\egg\mechanize\_mechanize.py", line 203, in open
+  File "build\bdist.win32\egg\mechanize\_mechanize.py", line 230, in _mech_open
+  File "build\bdist.win32\egg\mechanize\_opener.py", line 193, in open
+  File "build\bdist.win32\egg\mechanize\_urllib2_fork.py", line 344, in _open
+  File "build\bdist.win32\egg\mechanize\_urllib2_fork.py", line 332, in _call_chain
+  File "build\bdist.win32\egg\mechanize\_urllib2_fork.py", line 1142, in http_open
+  File "build\bdist.win32\egg\mechanize\_urllib2_fork.py", line 1118, in do_open
+urllib2.URLError: <urlopen error [Errno 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+
+
+
+
+
+
+
+15
+Strategic Employment Partners
+Liberty Personnel Services
+Five9, Inc.
+Genesys
+Talent Solvers
+Zazzle
+Danaher Corporate
+UpOut, Inc
+WyzAnt Tutoring
+Salesforce
+/rc/clk?jk=e95c735b1f00f5b0 10 10
+/rc/clk?jk=7c0da0c953bdad11 10 10
+error opening link: /rc/clk?jk=139f127b695132d1
+<urlopen error [Errno 11001] getaddrinfo failed>
+error opening link: /rc/clk?jk=70fb527ce5cc2bec
+<urlopen error [Errno 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+Exception in thread Thread-6128:
+Traceback (most recent call last):
+  File "C:\Python27\lib\threading.py", line 810, in __bootstrap_inner
+    self.run()
+  File "C:\Python27\lib\threading.py", line 763, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\jobs_parser.py", line 54, in get_text_from_url
+    text, ad_website = get_text_from_url(url, 1, return_list)
+TypeError: 'NoneType' object is not iterable
+
+Exception in thread Thread-6129:
+Traceback (most recent call last):
+  File "C:\Python27\lib\threading.py", line 810, in __bootstrap_inner
+    self.run()
+  File "C:\Python27\lib\threading.py", line 763, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\jobs_parser.py", line 54, in get_text_from_url
+    text, ad_website = get_text_from_url(url, 1, return_list)
+TypeError: 'NoneType' object is not iterable
+
+
+
+
+
+
+
+
+
+
+/rc/clk?jk=80179d319b7aea0a 10 10
+/rc/clk?jk=2457cfdab9cfff22 10 10
+/rc/clk?jk=fe990507d74d7169 10 10
+/rc/clk?jk=d764797778b7b5db 10 10
+/rc/clk?jk=eecb6a572a5fab7c 10 10
+/rc/clk?jk=0ed5af56a80b9a81 10 10
+/rc/clk?jk=dc6435088ebec972 10 10
+error opening link: /cmp/Level-Four-Solutions-Group,-Inc./jobs/Mobile-Application-Developer-afef13a482f8b6d0?r=1
+<urlopen error [Errno 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond>
+/rc/clk?jk=896742a7b81dd234 10 10
+Exception in thread Thread-30078:
+Traceback (most recent call last):
+  File "C:\Python27\lib\threading.py", line 810, in __bootstrap_inner
+    self.run()
+  File "C:\Python27\lib\threading.py", line 763, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\jobs_parser.py", line 54, in get_text_from_url
+    text, ad_website = get_text_from_url(url, 1, return_list)
+TypeError: 'NoneType' object is not iterable
+
+error opening link: /rc/clk?jk=8aa89d708e64f623
+HTTP Error 503: Service Unavailable
+error opening link: /rc/clk?jk=8aa89d708e64f623
+HTTP Error 503: Service Unavailable
+saved to ES
+9
+Traceback (most recent call last):
+  File "C:\eclipse\plugins\org.python.pydev_3.8.0.201409251235\pysrc\pydevd.py", line 2183, in <module>
+    globals = debugger.run(setup['file'], None, None)
+  File "C:\eclipse\plugins\org.python.pydev_3.8.0.201409251235\pysrc\pydevd.py", line 1622, in run
+    pydev_imports.execfile(file, globals, locals)  # execute the script
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\main.py", line 17, in <module>
+    jobs_parser.download_jobs(job, location)
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\jobs_parser.py", line 201, in download_jobs
+    dates = get_dates(page)
+  File "C:\git_projects\job-statistics\SkillSearcher\org\skillsearcher\jobs_parser.py", line 86, in get_dates
+    html = page.get_data()
+  File "build\bdist.win32\egg\mechanize\_response.py", line 172, in get_data
+  File "build\bdist.win32\egg\mechanize\_response.py", line 190, in read
+  File "C:\Python27\lib\socket.py", line 351, in read
+    data = self._sock.recv(rbufsize)
+  File "C:\Python27\lib\httplib.py", line 543, in read
+    return self._read_chunked(amt)
+  File "C:\Python27\lib\httplib.py", line 612, in _read_chunked
+    value.append(self._safe_read(chunk_left))
+  File "C:\Python27\lib\httplib.py", line 658, in _safe_read
+    chunk = self.fp.read(min(amt, MAXAMOUNT))
+  File "C:\Python27\lib\socket.py", line 380, in read
+    data = self._sock.recv(left)
+socket.error: [Errno 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+

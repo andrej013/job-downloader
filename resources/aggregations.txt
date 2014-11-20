@@ -1,0 +1,135 @@
+#number of all jobs per city
+GET /skill-analyzer/indeed-jobs/_search?search_type=count 
+{
+    "aggs" : { 
+        "colors" : { 
+            "terms" : {
+              "field" : "city" 
+            }
+        }
+    }
+}
+
+#number of python jobs per regional center
+GET /skill-analyzer/indeed-jobs/_search?search_type=count
+{
+    "query": {
+    "bool": {
+      "must": [
+                  { "match": { "ad_text": "python"   }}
+      ]
+    }
+  },
+    "aggs" : {
+        "colors" : {
+            "terms" : {
+              "field" : "regional_center"
+            }
+        }
+    }
+}
+
+#get the size of cities per regional center:
+GET /skill-analyzer/indeed-jobs/_search?search_type=count 
+{
+    "aggs" : { 
+        "colors" : { 
+            "terms" : {
+              "field" : "regional_center",
+              "size": 20
+            },
+         "aggs": {
+            "make": { 
+                "terms": {
+                    "field": "city" 
+                }
+            }
+         }
+      }
+    }
+}
+
+#list of cities per regional center with the number of jobs that have both sql and python in each city
+GET /skill-analyzer/indeed-jobs/_search?search_type=count
+{
+    "query": {
+    "bool": {
+      "must": [
+                  { "match": { "ad_text": "python"   }},
+                  { "match": { "ad_text": "sql"   }}
+      ]
+    }
+  },
+    "aggs" : {
+        "colors" : {
+            "terms" : {
+              "field" : "regional_center"
+            },
+         "aggs": {
+            "make": { 
+                "terms": {
+                    "field": "city" 
+                }
+            }
+         }
+        }
+    }
+}
+
+
+#how many java jobs in New York(doc_count) have also sql in them(total)
+GET /skill-analyzer/indeed-jobs/_search?search_type=count
+{
+    "query": {
+    "bool": {
+      "must": [
+        { "match": { "ad_text": "java"   }},
+        { "match": { "regional_center": "New York"   }}
+      ]
+    }
+  },
+    "aggs" : {
+        "colors" : {
+            "terms" : {
+              "field" : "regional_center"
+            }
+        }
+    }
+    , "post_filter": {
+      "query": {
+    "bool": {
+      "must": [
+                  
+                  { "match": { "ad_text": "sql"   }}
+                  ]}}
+    }
+}
+
+
+
+
+#get non null aggregation
+GET /skill-analyzer/indeed-jobs/_search?search_type=count
+{
+    "query": {
+      "filtered": {
+        "query": {"bool": {
+      		"must": [
+                  { "match": { "job_title": "java"   }}
+      		]
+    	  }
+    	},
+        "filter": {"exists": {
+          "field": "ad_text"
+        }}
+      }
+    
+  },
+    "aggs" : {
+        "colors" : {
+            "terms" : {
+              "field" : "regional_center"
+            }
+        }
+    }
+}

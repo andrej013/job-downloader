@@ -1,0 +1,97 @@
+#get doc by id, encode special characters using this website : http://meyerweb.com/eric/tools/dencoder/
+GET /skill-analyzer/indeed-jobs/%2Frc%2Fclk%3Fjk%3Dd47b332776d1eb80
+
+use ids query, just escape chars with backslash \ as explained http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html in reserved chars section
+POST /skill-analyzer/indeed-jobs/_search
+{
+  "query": {
+    "ids" : {
+        "type" : "indeed-jobs",
+        "values" : ["\/rc\/clk?jk=d47b332776d1eb80", "aa"]
+    }
+  }
+}
+
+
+
+GET /skill-analyzer/indeed-jobs/_search   
+{
+  "query": {
+    "bool": {
+      "must": [
+                  { "match": { "job_title": "java" }},
+                  { "match": { "ad_text": "sql"   }}
+      ]
+    }
+  }
+}
+GET /skill-analyzer/indeed-jobs/_search
+{
+  "query": {
+    "filtered": {
+      "filter": {
+        "term": {
+          "state": "CT"
+        }
+      }
+    }
+  }
+}
+
+
+#GET /_all/_mapping/type/
+GET /_all/_mapping/indeed-jobs/
+
+
+
+PUT /ads-test
+{
+    "mappings" : {
+        "jobs-test" : {
+            "properties" : {
+                "state" : {
+                    "type" : "string",
+                    "index" : "not_analyzed" 
+                }
+            }
+        }
+    }
+}
+
+DELETE /skill-analyzer
+
+GET /skill-analyzer/indeed-jobs/_search
+
+PUT /skill-analyzer
+{
+    "mappings" : {
+        "indeed-jobs" : {
+            "properties" : {
+                "city" : {
+                    "type" : "string",
+                    "index" : "not_analyzed" 
+                },
+                "regional_center" : {
+                    "type" : "string",
+                    "index" : "not_analyzed" 
+                },
+                "state" : {
+                    "type" : "string",
+                    "index" : "not_analyzed" 
+                },
+                "indeed_url" : {
+                    "type" : "string",
+                    "index" : "not_analyzed" 
+                },
+                "company" : {
+                    "type" : "string",
+                    "index" : "not_analyzed" 
+                },
+                "website_url" : {
+                    "type" : "string",
+                    "index" : "not_analyzed" 
+                }
+            }
+        }
+    }
+}

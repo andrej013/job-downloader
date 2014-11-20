@@ -1,0 +1,24 @@
+python
+1. add settings object
+2. fix error handling so that it doesnt crash or break the loop when critical error is found
+3. change id that is sent to ES by converting special characters and maybe adding one extra field-unfiltered id
+4. support querying jobs with two words where both must be in a document(for example big+data)
+5. write new program that reads 50 job ads
+
+ES
+1. find a way to save special words such as c#, c++ and c separately so that query gives different results for each
+
+Java
+1. bulk query instead of one query for each skill
+2. keep the ES and mySql connection open instead of opening one for each request.
+3. create new service, jobs-statistics-service
+
+HTML5
+start building simple front end
+
+
+all:
+improve logging
+analysis of similar cities!!!
+determine if demand in skills in NY lags the demand of skills in San Fran/Jose
+based on skills, give recommendations what to learn next
