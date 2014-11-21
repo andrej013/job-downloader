@@ -304,15 +304,29 @@ def download_jobs(job_title, location):
     br = mechanize.Browser()
     br.set_handle_robots(False)
     br.addheaders = [('User-agent', 'Firefox')]
+    
+    try:
+        br.open(advanced_job_search_site)
+    except Exception as e:  #catch urllib2.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+        print str(e)
+        #retry 
+        try:
+            br.open(advanced_job_search_site)
+        except Exception as e:
+            print str(e)
+            print job_title+' '+location
+            return
         
-    br.open(advanced_job_search_site)
     br.select_form('sf')
     br.form[ 'as_ttl' ] = job_title
     br.form[ 'l' ] = location
     
     set_ads_per_page_to_100(br)
-    page = br.submit()
-    
+    try:
+        page = br.submit()
+    except Exception as e:
+        print str(e)
+        return
     
     regional_center = location.split(',')[0]  # aka city
     page_number = 1

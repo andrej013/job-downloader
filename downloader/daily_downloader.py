@@ -40,7 +40,7 @@ class DailyDownloader(object):
         return False
     
     def get_job_keywords(self):
-        job_names=['java', 'python', 'big data', 'software engineer', 'Scala','R','Perl','SQL','C#','Ruby','C++','JavaScript','PHP','HTML5','CSS']
+        job_names=['nosql', 'haddop', 'mongodb', 'cassandra', 'hbase', 'java', 'python', 'big data', 'software engineer', 'Scala','R','Perl','SQL','C#','C++','C','Ruby''JavaScript','PHP','HTML5','CSS']
         return job_names
     
     def __init__(self):
